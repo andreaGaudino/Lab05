@@ -1,3 +1,7 @@
+import dataclasses
+@dataclasses.dataclass
 class Studente:
-    def __init__(self):
-        pass
+    matricola:float
+    cognome:str
+    nome:str
+    CDS:str

@@ -1,5 +1,7 @@
 import flet as ft
 
+from database.corso_DAO import Corso_dao
+
 
 class View(ft.UserControl):
     def __init__(self, page: ft.Page):
@@ -13,8 +15,6 @@ class View(ft.UserControl):
         self._controller = None
         # graphical elements
         self._title = None
-        self.txt_name = None
-        self.btn_hello = None
         self.txt_result = None
         self.txt_container = None
 
@@ -24,10 +24,12 @@ class View(ft.UserControl):
         self._title = ft.Text("App gestione studenti", color="blue", size=24)
         self._page.controls.append(self._title)
 
+        self.stampa = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         #ROW with some controls
         #row 1
-        self.menu_corsi = ft.Dropdown(width=700, label="Selezionare un corso")
-        self.btn_cerca_iscritti = ft.ElevatedButton("Cerca iscritti")
+        self.menu_corsi = ft.Dropdown(width=700, label="Corso", hint_text="Selezionare un corso")
+        self.handle_aggiunta_corsi_tendina()
+        self.btn_cerca_iscritti = ft.ElevatedButton("Cerca iscritti", on_click=self._controller.handle_btn_iscritti)
 
         row1 = ft.Row([self.menu_corsi, self.btn_cerca_iscritti], alignment=ft.MainAxisAlignment.CENTER)
 
@@ -47,7 +49,8 @@ class View(ft.UserControl):
 
 
 
-        self._page.add(row1,row2, row3)
+        self._page.add(row1,row2, row3, self.stampa)
+
     @property
     def controller(self):
         return self._controller
@@ -68,4 +71,11 @@ class View(ft.UserControl):
         self._page.update()
 
     def update_page(self):
+        self._page.update()
+
+
+    def handle_aggiunta_corsi_tendina(self):
+        tabella_corsi = Corso_dao().get_corsi()
+        for corso in tabella_corsi:
+            self.menu_corsi.options.append(ft.dropdown.Option(key=corso.codins, text=corso.__str__()))
         self._page.update()
