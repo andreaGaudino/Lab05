@@ -27,7 +27,7 @@ class View(ft.UserControl):
         self.stampa = ft.ListView(expand=1, spacing=10, padding=20, auto_scroll=True)
         #ROW with some controls
         #row 1
-        self.menu_corsi = ft.Dropdown(width=700, label="Corso", hint_text="Selezionare un corso")
+        self.menu_corsi = ft.Dropdown(width=700, label="Selezionare un corso")
         self.handle_aggiunta_corsi_tendina()
         self.btn_cerca_iscritti = ft.ElevatedButton("Cerca iscritti", on_click=self._controller.handle_btn_iscritti)
 
@@ -42,9 +42,9 @@ class View(ft.UserControl):
         row2 = ft.Row([self.matricola, self.cognome, self.nome], alignment=ft.MainAxisAlignment.CENTER)
 
         #row3
-        self.cerca_studente = ft.ElevatedButton("Cerca studente")
-        self.cerca_corsi = ft.ElevatedButton("Cerca corsi")
-        self.iscrivi = ft.ElevatedButton("Iscrivi")
+        self.cerca_studente = ft.ElevatedButton("Cerca studente", on_click=self._controller.handle_cerca_studente)
+        self.cerca_corsi = ft.ElevatedButton("Cerca corsi", on_click=self._controller.handle_cerca_corsi)
+        self.iscrivi = ft.ElevatedButton("Iscrivi", on_click=self._controller.handle_iscrivi)
         row3 = ft.Row([self.cerca_studente, self.cerca_corsi, self.iscrivi], alignment=ft.MainAxisAlignment.CENTER)
 
 
